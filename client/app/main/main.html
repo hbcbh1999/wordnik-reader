@@ -1,0 +1,22 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<header class="hero-unit" id="banner">
+  <div class="container">
+    <h1>Wordnik Reader</h1>
+    <p class="lead">Understanding in just a click!</p>
+  </div>
+</header>
+
+<div class="container">
+	<div class="row">
+		<h3>Paste Article URL</h3>
+		<input type="text" class="form-control" ng-model="url">
+		<button ng-click="getArticle(url)">Get Article!</button>
+	</div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+      <p><a href="https://twitter.com/migidomingo">@migidomingo</a></p>
+  </div>
+</footer>
