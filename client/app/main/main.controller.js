@@ -3,6 +3,7 @@
 angular.module('wordnikReaderApp')
   .controller('MainCtrl', function ($scope, $http) {
   	$scope.show = false;
+
 		$scope.getArticle = function(url){
 			// verify URL
 			var articleUrl = {url: url};
@@ -15,10 +16,15 @@ angular.module('wordnikReaderApp')
 					$scope.byline = article.byline;
 					$scope.content = article.content;
 					$scope.show = true;
+					$scope.url = "";
 					// use this to show the article
 				})
 				.error(function(error){
 					console.log(error);
 				});
+		};
+
+		$scope.changeShow = function(){
+			$scope.show = !$scope.show;
 		};
   });
