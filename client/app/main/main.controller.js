@@ -2,6 +2,7 @@
 
 angular.module('wordnikReaderApp')
   .controller('MainCtrl', function ($scope, $http) {
+  	$scope.show = false;
 		$scope.getArticle = function(url){
 			// verify URL
 			var articleUrl = {url: url};
@@ -9,6 +10,11 @@ angular.module('wordnikReaderApp')
 			$http.post("/api/articles", articleUrl)
 				.success(function(article){
 					console.log(article);
+					$scope.title = article.title;
+					$scope.summary = article.summary;
+					$scope.byline = article.byline;
+					$scope.content = article.content;
+					$scope.show = true;
 					// use this to show the article
 				})
 				.error(function(error){

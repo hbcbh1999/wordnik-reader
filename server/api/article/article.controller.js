@@ -21,6 +21,7 @@ exports.index = function(req, res) {
 		if (!err) {
 			var $ = cheerio.load(html);
 			articleObj.title = $('h1.title').text();
+			articleObj.summary = $('.deck p').text();
 			articleObj.byline = $('header div a.navigate', '#page-body-content').text();
 			articleObj.content = [];
 			$('.prose p').each(function(i, elem){
