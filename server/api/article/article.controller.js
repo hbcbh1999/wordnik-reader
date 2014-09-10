@@ -3,21 +3,16 @@
 var _ = require('lodash');
 var request = require('request');
 var cheerio = require('cheerio');
+var config = require('../../config/environment');
 
 // scrapes the article off of the URL then sends it back to the client
 exports.index = function(req, res) {
-	console.log(req.body.url);
-	// start scraper and scrape article content
-	// article = {title: title, summary: summary, body: body}
-	// res.json(article);
 	var options = {
 		url: req.body.url,
 		method: 'GET'
 	};
-	// extract postNum
 	var articleObj = {};
 	request(options, function(err, response, html){
-		console.log("we're requesting and cheering")
 		if (!err) {
 			var $ = cheerio.load(html);
 			articleObj.title = $('h1.title').text();
@@ -26,8 +21,8 @@ exports.index = function(req, res) {
 			articleObj.content = [];
 			$('.prose p').each(function(i, elem){
 				articleObj.content[i] = $(this).text();
+				articleObj.content[i] = articleObj.content[i].split(' ');
 			});
-			console.log("boom", articleObj);
 			res.send(articleObj);
 		} else {
 			return err;
@@ -37,5 +32,19 @@ exports.index = function(req, res) {
 
 // calls http://developer.wordnik.com/v4/word.json/{word}/definitions and returns the definition to the client
 exports.definition = function(req, res) {
-
+	var options = {
+		url: "https://api.wordnik.com/v4/word.json/"+req.body.word+"/definitions?limit=50&includeRelated=false&useCanonical=false&includeTags=false&api_key=3369a020785698ed6150309068b04e2f961502800c5fb00c4",//+config.wordnik.apiKey,
+		method: "GET"
+	};
+	console.log(options);
+	request(options, function(err, response, wordObj){
+		console.log("here");
+		if (!err){
+			console.log(response.statusCode, wordObj);
+			res.send(wordObj);
+		} else {
+			console.log(err, "everywhere");
+			res.send(404);
+		}
+	});
 };

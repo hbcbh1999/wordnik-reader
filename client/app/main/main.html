@@ -17,13 +17,27 @@
 
 <div class="container" ng-show="show">
 	<div class="row">
-		<h3>{{title}}</h3>
-		<h5>{{summary}}</h5>
-		<h6>{{byline}}</h6>
-		<div ng-repeat="paragraph in content">
-			<p>{{paragraph}}</p>
+		<div class="col-md-8">
+			<h3><a ng-repeat="word in title" class="words" ng-click="wordDef(word)">{{word}} </a></h3>
+			<h5><a ng-repeat="type in summary track by $index" class="words" ng-click="wordDef(type)">{{type}} </a></h5>
+			<h6>{{byline}}</h6>
+			<div ng-repeat="paragraph in content">
+				<p><a ng-repeat="words in paragraph track by $index" class="words" ng-click="wordDef(words)">{{words}} </a></p>
+			</div>
+			<button type="button" class="btn btn-primary" ng-click="changeShow()">Get Another Article!</button>
 		</div>
-		<button type="button" class="btn btn-primary" ng-click="changeShow()">Get Another Article!</button>
+		<div class="col-md-4">
+			<div ng-repeat="definition in wordObj track by $index">
+				<div ng-show="showDef(definition)" class="definition">
+					<h3>{{definition.word}}</h3>
+					<em>{{definition.attributionText}}</em>
+					<h6>{{definition.partOfSpeech}}</h6>
+					<p>{{definition.text}}</p>
+					<button type="button" class="btn btn-warning" ng-click="back()">Back</button>
+					<button type="button" class="btn btn-info" ng-click="next()">Next</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
