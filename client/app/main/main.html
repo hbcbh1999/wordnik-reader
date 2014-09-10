@@ -10,7 +10,7 @@
 <div class="container" ng-hide="show">
 	<div class="row">
 		<h3>Paste Article URL</h3>
-		<input type="text" class="form-control" ng-model="url">
+		<input type="text" class="form-control" ng-model="url" ng-keydown="enter($event)">
 		<button ng-click="getArticle(url)">Get Article!</button>
 	</div>
 </div>
