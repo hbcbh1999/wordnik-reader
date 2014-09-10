@@ -5,12 +5,13 @@ angular.module('wordnikReaderApp')
   	$scope.show = false;
 
 		$scope.enter = function(e){
-			if (e.keyCode != 13){
+			if (e.keyCode !== 13){
 				return;
 			} else {
 				$scope.getArticle($scope.url);
 			}
-		}
+		};
+
 		$scope.getArticle = function(url){
 			$scope.wordObj = '';
 			var splitUrl = url.split(/^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/);
@@ -20,7 +21,7 @@ angular.module('wordnikReaderApp')
 				var sites = ['fastcompany', 'fastcoexist', 'fastcodesign', 'fastcolabs', 'fastcocreate'];
 				var baseUrl = splitUrl[3].split('.')[1];
 				if (sites.indexOf(baseUrl)===-1){
-					return alert('Please enter a Fast Company URL')
+					return alert('Please enter a Fast Company URL');
 				} else {
 					var articleUrl = {url: url};
 					$http.post("/api/articles", articleUrl)
@@ -30,13 +31,13 @@ angular.module('wordnikReaderApp')
 							$scope.byline = article.byline;
 							$scope.content = article.content;
 							$scope.show = true;
-							$scope.url = "";
+							$scope.url = '';
 						})
 						.error(function(error){
 							return alert(error);
 						});
-				};
-			};
+				}
+			}
 		};
 
 		$scope.changeShow = function(){
@@ -45,14 +46,14 @@ angular.module('wordnikReaderApp')
 
 		$scope.wordDef = function(word){
 			$scope.defPointer = 0;
-			var symbols = [".", ",", "?", "!", "s", "'", ":"]
+			var symbols = [".", ",", "?", "!", "s", "'", ":"];
 			if (symbols.indexOf(word[word.length-1]) !== -1){
 				if (word[word.length-2] === "'"){
 					word = word.slice(0, -2);
 				} else {
 					word = word.slice(0, -1);
-				};
-			};
+				}
+			}
 			word = word.toLowerCase();
 			word = {word: word};
 			$http.post("/api/articles/word/definition", word)
