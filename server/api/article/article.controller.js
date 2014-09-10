@@ -16,20 +16,22 @@ exports.index = function(req, res) {
 	};
 	// extract postNum
 	var articleObj = {};
-	console.log("here");
 	request(options, function(err, response, html){
+		console.log("we're requesting and cheering")
 		if (!err) {
 			var $ = cheerio.load(html);
 			articleObj.title = $('h1.title').text();
-			articleObj.byline = $('header div a.navigate', '#page-body-content').text()
-			console.log(articleObj);
-			// get content of each .prose p
+			articleObj.byline = $('header div a.navigate', '#page-body-content').text();
+			articleObj.content = [];
+			$('.prose p').each(function(i, elem){
+				articleObj.content[i] = $(this).text();
+			});
+			console.log("boom", articleObj);
+			res.send(articleObj);
 		} else {
-			console.log(err);
+			return err;
 		}
 	});
-	console.log(articleObj);
-	res.send(200);
 };
 
 // calls http://developer.wordnik.com/v4/word.json/{word}/definitions and returns the definition to the client
