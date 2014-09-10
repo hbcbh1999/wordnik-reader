@@ -4,11 +4,12 @@ var should = require('should');
 var app = require('../../app');
 var request = require('supertest');
 
-describe('GET /api/articles', function() {
+describe('POST /api/articles', function() {
 
-  it('should respond with JSON array', function(done) {
+  it('should respond with JSON object', function(done) {
     request(app)
-      .get('/api/articles')
+      .post('/api/articles')
+      .send({url: 'http://www.fastcoexist.com/3034777/the-man-who-feeds-12-million-kids-a-day'})
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {

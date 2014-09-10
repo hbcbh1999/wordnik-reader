@@ -19,15 +19,12 @@ angular.module('wordnikReaderApp')
 			} else {
 				var sites = ['fastcompany', 'fastcoexist', 'fastcodesign', 'fastcolabs', 'fastcocreate'];
 				var baseUrl = splitUrl[3].split('.')[1];
-				console.log(baseUrl);
 				if (sites.indexOf(baseUrl)===-1){
 					return alert('Please enter a Fast Company URL')
 				} else {
 					var articleUrl = {url: url};
-					console.log(articleUrl);
 					$http.post("/api/articles", articleUrl)
 						.success(function(article){
-							console.log(article);
 							$scope.title = article.title.split(' ');
 							$scope.summary = article.summary.split(' ');
 							$scope.byline = article.byline;
@@ -36,7 +33,7 @@ angular.module('wordnikReaderApp')
 							$scope.url = "";
 						})
 						.error(function(error){
-							console.log(error);
+							return alert(error);
 						});
 				};
 			};
@@ -60,7 +57,6 @@ angular.module('wordnikReaderApp')
 			word = {word: word};
 			$http.post("/api/articles/word/definition", word)
 				.success(function(wordObj){
-					console.log(wordObj);
 					$scope.wordObj = wordObj;
 				})
 				.error(function(error){

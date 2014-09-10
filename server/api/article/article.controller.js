@@ -33,17 +33,13 @@ exports.index = function(req, res) {
 // calls http://developer.wordnik.com/v4/word.json/{word}/definitions and returns the definition to the client
 exports.definition = function(req, res) {
 	var options = {
-		url: "https://api.wordnik.com/v4/word.json/"+req.body.word+"/definitions?limit=50&includeRelated=false&useCanonical=false&includeTags=false&api_key=3369a020785698ed6150309068b04e2f961502800c5fb00c4",//+config.wordnik.apiKey,
+		url: "https://api.wordnik.com/v4/word.json/"+req.body.word+"/definitions?limit=50&includeRelated=false&useCanonical=false&includeTags=false&api_key="+config.wordnik.apiKey,
 		method: "GET"
 	};
-	console.log(options);
 	request(options, function(err, response, wordObj){
-		console.log("here");
 		if (!err){
-			console.log(response.statusCode, wordObj);
 			res.send(wordObj);
 		} else {
-			console.log(err, "everywhere");
 			res.send(404);
 		}
 	});
